@@ -136,8 +136,10 @@ static void iqs5xx_work_handler(struct k_work *work) {
         button_code = INPUT_BTN_1;
     }
 
-    bool hold_became_active = config->press_and_hold &&\n                              (gesture_events_0 & IQS5XX_PRESS_AND_HOLD) && !data->active_hold;
-    bool hold_released = config->press_and_hold &&\n                         !(gesture_events_0 & IQS5XX_PRESS_AND_HOLD) && data->active_hold;
+    bool hold_became_active = config->press_and_hold &&
+                              (gesture_events_0 & IQS5XX_PRESS_AND_HOLD) && !data->active_hold;
+    bool hold_released = config->press_and_hold &&
+                         !(gesture_events_0 & IQS5XX_PRESS_AND_HOLD) && data->active_hold;
 
     int16_t rel_x, rel_y;
     if (tp_movement || scroll) {
