@@ -33,7 +33,8 @@
 
 #define IQS5XX_SYSTEM_CONFIG_1 0x058F
 // System Config 1 bits.
-#define IQS5XX_EVENT_MODE BIT(0)
+// Diagnostic: force streaming mode by leaving EVENT_MODE cleared.
+#define IQS5XX_EVENT_MODE 0
 #define IQS5XX_GESTURE_EVENT BIT(1)
 #define IQS5XX_TP_EVENT BIT(2)
 #define IQS5XX_REATI_EVENT BIT(3)
@@ -81,9 +82,6 @@
 #define IQS5XX_SWIPE_DOWN BIT(5)
 
 // Time in ms, 2 registers wide.
-// Hold time + tap time is used as
-// a threshold for the press and
-// hold gesture.
 #define IQS5XX_HOLD_TIME 0x06BD
 // TODO: Make hold time configurable with KConfig.
 
