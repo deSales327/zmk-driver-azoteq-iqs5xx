@@ -119,7 +119,7 @@ static void iqs5xx_work_handler(struct k_work *work) {
     }
 
     bool tp_movement = (sys_info_1 & IQS5XX_TP_MOVEMENT) != 0;
-    bool scroll = (gesture_events_1 & IQS5XX_SCROLL) != 0;
+    bool scroll = config->scroll && (gesture_events_1 & IQS5XX_SCROLL) != 0;
     if (!scroll) {
         // Clear accumulators if we're not actively scrolling.
         data->scroll_x_acc = 0;
@@ -128,16 +128,16 @@ static void iqs5xx_work_handler(struct k_work *work) {
 
     uint16_t button_code;
     bool button_pressed = false;
-    if (gesture_events_0 & IQS5XX_SINGLE_TAP) {
+    if (config->one_finger_tap && (gesture_events_0 & IQS5XX_SINGLE_TAP)) {
         button_pressed = true;
         button_code = INPUT_BTN_0;
-    } else if (gesture_events_1 & IQS5XX_TWO_FINGER_TAP) {
+    } else if (config->two_finger_tap && (gesture_events_1 & IQS5XX_TWO_FINGER_TAP)) {
         button_pressed = true;
         button_code = INPUT_BTN_1;
     }
 
-    bool hold_became_active = (gesture_events_0 & IQS5XX_PRESS_AND_HOLD) && !data->active_hold;
-    bool hold_released = !(gesture_events_0 & IQS5XX_PRESS_AND_HOLD) && data->active_hold;
+    bool hold_became_active = config->press_and_hold &&\n                              (gesture_events_0 & IQS5XX_PRESS_AND_HOLD) && !data->active_hold;
+    bool hold_released = config->press_and_hold &&\n                         !(gesture_events_0 & IQS5XX_PRESS_AND_HOLD) && data->active_hold;
 
     int16_t rel_x, rel_y;
     if (tp_movement || scroll) {
