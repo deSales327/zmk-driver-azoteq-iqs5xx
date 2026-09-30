@@ -82,6 +82,9 @@
 #define IQS5XX_SWIPE_DOWN BIT(5)
 
 // Time in ms, 2 registers wide.
+// Hold time + tap time is used as
+// a threshold for the press and
+// hold gesture.
 #define IQS5XX_HOLD_TIME 0x06BD
 // TODO: Make hold time configurable with KConfig.
 
